@@ -1,9 +1,8 @@
 export default async function handler(req, res) {
     try {
-        const { region, params } = req.query;
-        // params = [action, itemId, uid, pass, version]
-        const fullPath = Array.isArray(params) ? params.join('/') : params;
-        const url = `https://macxwish.vercel.app/api/wishlist/${region}/${fullPath}`;
+        const { region } = req.query;
+        const exactPath = req.url.split(`/api/wishlist/${region}/`)[1];
+        const url = `https://macxwish.vercel.app/api/wishlist/${region}/${exactPath}`;
 
         const response = await fetch(url);
         const data = await response.json();
