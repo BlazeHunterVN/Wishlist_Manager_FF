@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="BlazeTools - Free Fire Wishlist Manager. Add, remove and manage your wishlist items.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>WISHLIST MANAGER | BLAZETOOLS</title>
+    <link rel="icon"
+        href="https://dl.dir.freefiremobile.com/common/web_event/official2/dist/client/img/full_logo.969f536.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./security.js"></script>
+</head>
+
+<body>
+
+    <header class="flex justify-center items-center h-16 bg-black border-b-2 border-[#ffde00] sticky top-0 z-50">
+        <img src="https://dl.dir.freefiremobile.com/common/web_event/official2/dist/client/img/full_logo.969f536.png"
+            class="h-7">
+    </header>
+
+    <div class="main-wrapper">
+        <div id="view-login">
+            <div class="text-center my-10 gff">
+                <span class="text-[64px] font-black italic block leading-[0.75]">WISHLIST</span>
+                <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">MANAGER</span>
+                <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">ADD, REMOVE & MANAGE
+                    WISHLIST</p>
+            </div>
+            <div class="panel-container">
+                <div class="flex mb-8 bg-black p-1 border border-zinc-900 rounded-full">
+                    <button id="t-file"
+                        class="flex-1 py-3 text-[10px] font-black rounded-full text-white bg-zinc-800 flex items-center justify-center gap-2"
+                        onclick="switchTab('file')">
+                        <i class="fa-solid fa-file-invoice"></i> GUEST FILE
+                    </button>
+                    <button id="t-manual"
+                        class="flex-1 py-3 text-[10px] font-black rounded-full text-zinc-600 flex items-center justify-center gap-2"
+                        onclick="switchTab('manual')">
+                        <i class="fa-solid fa-keyboard"></i> MANUAL
+                    </button>
+                </div>
+                <div id="box-file">
+                    <div class="h-44 flex flex-col items-center justify-center rounded-2xl cursor-pointer bg-[#050505] border-2 border-dashed border-zinc-900"
+                        onclick="accInp.click()">
+                        <i class="fa-solid fa-folder-open text-3xl text-zinc-800 mb-3"></i>
+                        <p id="f-label" class="gff text-[10px] text-zinc-600 uppercase">Select guest.dat</p>
+                    </div>
+                    <input type="file" id="accInp" class="hidden">
+                </div>
+                <div id="box-manual" class="hidden space-y-4">
+                    <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+                        <i class="fa-solid fa-user-tag text-zinc-700 mr-4"></i>
+                        <input id="in-uid" class="bg-transparent w-full text-sm gff outline-none"
+                            placeholder="Account UID">
+                    </div>
+                    <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+                        <i class="fa-solid fa-key text-zinc-700 mr-4"></i>
+                        <input id="in-pass" type="password" class="bg-transparent w-full text-sm gff outline-none"
+                            placeholder="Password">
+                    </div>
+                </div>
+                <button onclick="performAuth()"
+                    class="btn-mechanical btn-yellow w-full h-16 mt-8 text-lg font-bold italic">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 21L10 13H5L17 3L14 11H19L7 21Z" />
+                    </svg>
+                    LOGIN ACCOUNT
+                </button>
+            </div>
+        </div>
+
+        <div id="view-info" class="hidden">
+            <div class="text-center my-10 gff">
+                <span class="text-[54px] font-black italic block text-white uppercase">Account</span>
+                <span class="text-[54px] font-black italic block text-[#ffde00] uppercase">Info</span>
+            </div>
+            <div class="panel-container space-y-4">
+                <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-signature text-zinc-700"></i><span
+                            class="text-zinc-500 text-[10px] gff">NICKNAME</span></div>
+                    <span id="res-nick" class="gff text-white italic">---</span>
+                </div>
+                <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-id-badge text-zinc-700"></i><span
+                            class="text-zinc-500 text-[10px] gff">UID</span></div>
+                    <span id="res-uid" class="text-yellow-500 gff">---</span>
+                </div>
+                <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-earth-americas text-zinc-700"></i><span
+                            class="text-zinc-500 text-[10px] gff">REGION</span></div>
+                    <span id="res-reg" class="text-white gff uppercase">---</span>
+                </div>
+                <button onclick="toDash()"
+                    class="btn-mechanical btn-yellow w-full h-16 mt-4 font-bold text-lg italic uppercase">Confirm login
+                    <i class="fa-solid fa-angles-right"></i></button>
+            </div>
+        </div>
+
+        <div id="view-dash" class="hidden mt-10">
+            <div class="panel-container">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800"><i
+                                class="fa-solid fa-user-check text-yellow-500 text-xl"></i></div>
+                        <div>
+                            <div class="gff text-xl italic text-white" id="d-nick">---</div>
+                            <div class="gff text-[9px] text-zinc-600 uppercase">UID: <span id="d-uid-ghost">---</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="openLogoutModal()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-red-500">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex gap-2 items-start">
+                    <div class="flex-1 input-mechanical px-4 flex items-center">
+                        <input id="item-id" class="bg-transparent w-full text-sm gff outline-none text-white"
+                            placeholder="Enter ItemId">
+                    </div>
+                    <button onclick="processRequest('add')" class="btn-mechanical btn-green"><i
+                            class="fa-solid fa-plus text-xl"></i></button>
+                    <button onclick="processRequest('rem')" class="btn-mechanical btn-red"><i
+                            class="fa-solid fa-trash-can text-lg"></i></button>
+                </div>
+
+                <div id="status-box" class="status-window">
+                    <div id="status-icon" class="w-6 h-6 flex items-center justify-center"></div>
+                    <div class="flex flex-col flex-1 gap-1">
+                        <span id="status-text"
+                            class="gff text-[9px] uppercase tracking-widest text-zinc-400">Ready</span>
+                        <div class="progress-bar-small">
+                            <div id="p-fill" class="progress-fill-small"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <span class="gff text-[14px] text-yellow-500 italic" id="d-count">00/80</span>
+                    <button onclick="openWipeModal()"
+                        class="text-[10px] text-red-600 font-bold uppercase tracking-[0.2em] gff">WIPE WISHLIST</button>
+                </div>
+            </div>
+            <div id="wish-grid" class="wish-grid"></div>
+        </div>
+    </div>
+
+    <div id="modal-wipe" class="modal-overlay">
+        <div class="modal-box">
+            <h2 class="gff text-xl italic text-white mb-2">Remove All Items From Account?</h2>
+            <p class="text-zinc-500 text-[11px] uppercase tracking-widest">This action cannot be undone</p>
+            <div class="flex gap-4 mt-8">
+                <button onclick="closeModal('modal-wipe')"
+                    class="flex-1 h-14 btn-mechanical btn-gray text-[10px]">Cancel</button>
+                <button onclick="fullPurge()" class="flex-1 h-14 btn-mechanical btn-yellow text-[10px]">Clear
+                    All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-logout" class="modal-overlay">
+        <div class="modal-box">
+            <h2 class="gff text-xl italic text-white mb-2">Are You Sure You Want To Logout?</h2>
+            <p class="text-zinc-500 text-[11px] uppercase tracking-widest">Login again to manage your list</p>
+            <div class="flex gap-4 mt-8">
+                <button onclick="closeModal('modal-logout')"
+                    class="flex-1 h-14 btn-mechanical btn-gray text-[10px]">Cancel</button>
+                <button onclick="location.reload()"
+                    class="flex-1 h-14 btn-mechanical btn-red text-[10px]">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="kelly-loader">
+        <div class="loader-wrapper">
+            <div class="loader-ring"></div>
+            <div class="kelly-sprite" id="kelly"></div>
+        </div>
+        <p id="kelly-text" class="gff text-zinc-500 text-[10px] mt-6 tracking-[0.4em] uppercase">Processing</p>
+    </div>
+
+    <script src="./script.js"></script>
+    <noscript>
+        <p style="color:#fff;text-align:center;padding:40px">JavaScript is required to use BlazeTools.</p>
+    </noscript>
+</body>
+
+</html>
